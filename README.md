@@ -1,2 +1,1 @@
-# ankaspark
- Python Voice Assistant
+# AnkaSpark Voice Assistant
