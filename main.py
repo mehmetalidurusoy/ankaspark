@@ -4,20 +4,20 @@ import json
 import pyttsx3
 import speech_recognition as sr
 
-r = sr.Recognizer()
-
 settings={ 
  "configs": json.load(open(os.getcwd()+"/ankaspark.default.json",'r')),
- "commands": sys.argv[1::]
 }
 
 if os.path.exists(os.getcwd()+"/ankaspark.json"):
  settings.update(json.load(open(os.getcwd()+"/ankaspark.json",'r')))
 
+recognizer = sr.Recognizer()
+engine = pyttsx3.init()
+
 def speak(text):
-   engine=pyttsx3.init()
+   if sys.argv and settings.get("configs").get("speak_console_text_write")==True:
+      print(text)
    engine.say(text)
    engine.runAndWait()
 
-
-speak("Hello")
+speak("Hello I am "+settings.get("configs").get("hey_suffix"))
