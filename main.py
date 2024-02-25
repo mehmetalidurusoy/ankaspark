@@ -2,22 +2,45 @@ import os
 import sys
 import json
 import pyttsx3
+from tkinter import *
 import speech_recognition as sr
 
-settings={ 
- "configs": json.load(open(os.getcwd()+"/ankaspark.default.json",'r')),
+settings={
+ "assistant_wd": os.path.realpath(".")+"/"
 }
-
-if os.path.exists(os.getcwd()+"/ankaspark.json"):
+working_directory=os.getcwd()
+settings.update(json.load(open(os.getcwd()+"/ankaspark.default.json",'r')))
+if os.path.exists(working_directory+"/ankaspark.json"):
  settings.update(json.load(open(os.getcwd()+"/ankaspark.json",'r')))
-
+window=Tk()
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
 
 def speak(text):
-   if sys.argv and settings.get("configs").get("speak_console_text_write")==True:
+   if sys.argv and settings.get("speak_console_text_write")==True:
       print(text)
    engine.say(text)
    engine.runAndWait()
 
-speak("Hello I am "+settings.get("configs").get("hey_suffix"))
+class AnkaSpark():
+   def __init__(self,argv):
+      super(AnkaSpark, self).__init__()
+      self.init_ui()
+      self.argv=argv
+
+   def init_ui(self):
+      window.title(settings.get("screen").get("title"))
+      window.geometry(settings.get("screen").get("width_and_height"))
+
+   def cli(self):
+      print(settings)
+  
+   def run(self):
+      if self.argv:
+        self.cli()
+      else:
+        window.mainloop()
+
+if __name__ == '__main__':
+   ai=AnkaSpark(sys.argv[1::])
+   ai.run()

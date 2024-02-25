@@ -1,4 +1,8 @@
 {
  "hey_suffix": "AnkaSpark",
- "speak_console_text_write": false
+ "speak_console_text_write": false,
+ "screen":{
+  "title":"AnkaSpark Asistan",
+  "width_and_height":"750x560"
+ }
 }
